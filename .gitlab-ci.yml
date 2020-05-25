@@ -1,0 +1,25 @@
+image: python:3.7.4
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - python -V
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install -i https://mirrors.aliyun.com/pypi/simple/ wheel
+  - pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip
+  - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+  - cp config/.env.example config/.env
+
+test:
+  stage: test
+  script:
+    - python gen-jwt.py key.pem -jwks=./jwks.json --expire=3153600000 --claims=foo:bar
+  tags:
+    - uaek
