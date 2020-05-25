@@ -15,7 +15,6 @@ before_script:
   - pip install -i https://mirrors.aliyun.com/pypi/simple/ wheel
   - pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip
   - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
-  - cp config/.env.example config/.env
 
 test:
   stage: test
